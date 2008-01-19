@@ -8,6 +8,7 @@ Group:		Libraries
 Source0:	http://openib.org/downloads/%{name}-%{version}.tar.gz
 # Source0-md5:	2bf5c8f089a97a5e70701edc22066137
 URL:		http://openib.org/
+BuildRequires:	automake
 BuildRequires:	rpmbuild(macros) >= 1.402
 Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -73,6 +74,7 @@ ibv_devinfo wyświetlający informacje o urządzeniach InfiniBand.
 %setup -q
 
 %build
+cp -f /usr/share/automake/config.sub config
 %configure
 %{__make}
 
