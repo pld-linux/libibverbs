@@ -10,7 +10,6 @@ Source0:	http://www.openfabrics.org/downloads/verbs/%{name}-%{version}.tar.gz
 Source1:	%{name}.pc.in
 URL:		http://openib.org/
 BuildRequires:	rpmbuild(macros) >= 1.402
-Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
