@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=@libdir@
+includedir=${prefix}/include
+
+Name: ibverbs
+Version: @LIBVERSION@
+Description: ibverbs
+Requires:
+Libs: -L${libdir} -libverbs
+Cflags: -I${includedir}

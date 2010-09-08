@@ -1,14 +1,14 @@
 Summary:	A library for direct userspace use of InfiniBand hardware
 Summary(pl.UTF-8):	Biblioteka bezpośredniego dostępu do sprzętu InfiniBand z przestrzeni użytkownika
 Name:		libibverbs
-Version:	1.1.2
+Version:	1.1.4
 Release:	1
 License:	BSD or GPL v2
 Group:		Libraries
 Source0:	http://www.openfabrics.org/downloads/verbs/%{name}-%{version}.tar.gz
-# Source0-md5:	6ad270dacf26211616cbfc9fa733d112
+# Source0-md5:	0403bad1ee55650c89053cb61961faf4
+Source1:	%{name}.pc.in
 URL:		http://openib.org/
-BuildRequires:	automake
 BuildRequires:	rpmbuild(macros) >= 1.402
 Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -74,14 +74,23 @@ ibv_devinfo wyświetlający informacje o urządzeniach InfiniBand.
 %setup -q
 
 %build
-cp -f /usr/share/automake/config.sub config
-%configure
+%configure \
+	--disable-silent-rules
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/libibverbs.d
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+# check if not present already
+[ ! -f %{_pkgconfigdir}/ibverbs.pc ] || exit 1
+install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
+sed -e 's,@prefix@,%{_prefix},;
+	s,@libdir@,%{_libdir},;
+	s,@LIBVERSION@,%{version},' %{SOURCE1} >$RPM_BUILD_ROOT%{_pkgconfigdir}/ibverbs.pc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,12 +103,14 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS COPYING ChangeLog README
 %attr(755,root,root) %{_libdir}/libibverbs.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libibverbs.so.1
+%dir %{_sysconfdir}/libibverbs.d
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libibverbs.so
 %{_libdir}/libibverbs.la
 %{_includedir}/infiniband
+%{_pkgconfigdir}/ibverbs.pc
 %{_mandir}/man3/ibv_*.3*
 %{_mandir}/man3/mult_to_ibv_rate.3*
 
