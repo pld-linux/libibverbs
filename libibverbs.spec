@@ -85,7 +85,7 @@ install -d $RPM_BUILD_ROOT%{_sysconfdir}/libibverbs.d
 	DESTDIR=$RPM_BUILD_ROOT
 
 # check if not present already
-[ ! -f %{_pkgconfigdir}/ibverbs.pc ] || exit 1
+[ ! -f $RPM_BUILD_ROOT%{_pkgconfigdir}/ibverbs.pc ] || exit 1
 install -d $RPM_BUILD_ROOT%{_pkgconfigdir}
 sed -e 's,@prefix@,%{_prefix},;
 	s,@libdir@,%{_libdir},;
