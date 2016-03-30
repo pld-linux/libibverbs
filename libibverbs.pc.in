@@ -6,6 +6,6 @@ includedir=${prefix}/include
 Name: ibverbs
 Version: @LIBVERSION@
 Description: ibverbs
-Requires:
+Requires.private: libnl-3.0 libnl-route-3.0
 Libs: -L${libdir} -libverbs
 Cflags: -I${includedir}

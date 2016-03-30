@@ -1,14 +1,16 @@
 Summary:	A library for direct userspace use of InfiniBand hardware
 Summary(pl.UTF-8):	Biblioteka bezpośredniego dostępu do sprzętu InfiniBand z przestrzeni użytkownika
 Name:		libibverbs
-Version:	1.1.8
-Release:	2
+Version:	1.2.0
+Release:	1
 License:	BSD or GPL v2
 Group:		Libraries
 Source0:	https://www.openfabrics.org/downloads/verbs/%{name}-%{version}.tar.gz
-# Source0-md5:	1fe85889c8bbc4968b1feba6524ca408
+# Source0-md5:	208df0056ce9ae81b668c2d2d0cf2ec7
 Source1:	%{name}.pc.in
 URL:		http://openib.org/
+BuildRequires:	libnl-devel >= 1:3.2
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.402
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,6 +37,7 @@ Summary:	Development files for libibverbs library
 Summary(pl.UTF-8):	Pliki programistyczne biblioteki libibverbs
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	libnl-devel >= 1:3.2
 
 %description devel
 Header files for libibverbs library.
